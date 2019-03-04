@@ -1,0 +1,70 @@
+<!-- This page will be seen if you logged in -->
+
+<style>
+
+h1 {
+	text-align: center;	
+	box-shadow: 0 10px 30px rgba(0,0,0,0.19), 0 10px 6px rgba(0,0,0,0.23);
+	background-color: lightgray;
+	padding: 10px;
+	font-weight: 100px;
+	font-size: 16px;
+		
+}
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+    height: 25px;
+    font-align: center;
+    font-weight: bold;
+    margin-right: 20px;
+    position: absolute;
+    right: 5;
+}
+
+#movie_list{
+	text-align: center;
+}
+body{
+	background-colour: red;
+	overflow: auto;
+}
+</style>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+   <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <title>Shopping Cart</title>
+</head>
+<body>
+<h1>Shopping Cart</h1>
+<a href="pay.html" class= "button">Checkout</a><br><br>
+<div style="text-align: center; border:1px solid black; background-color:#fde3b2">
+<div style= "display: inline-block; text-align: left;">
+<form action="#" id="movie_list" METHOD="get" style="font-weight: bold"></form>
+</div>
+</div>
+<br><br>
+<a href="javascript:history.go(-1);" class = "button">Go back</a><br>
+<a href="Main.html" class="button">Go back to search page</a> 
+
+
+<!-- include your own JS file -->
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script type='text/javascript' src='cart.js'></script>
+</body>
+</html>

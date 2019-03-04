@@ -1,0 +1,22 @@
+Basically we use 5 search conditions realted to "like " in sql query in starservlet.java, only use % or %% corresponse to like.
+
+1.id:(like "%id%")
+we get the id from the inputbox and add "%"+id+"%". So if you search any character contains or partial contain the id you enter. It will show in the results.
+
+2.year:(like "%%" or like "year")
+This one you have to enter the exact year or just leave it empty, otherwise it won't show the result. Like if you type only "2", it wont show anything. Instead. you have to type "2002". 
+
+3.director:(like "%year%")
+same as id
+
+4.star name:(like "%starname%")
+same as id
+
+5.genres type:(dont use like)
+we use a selection of all genres types of drop down box to get the value of genres type and once we get it we don't use "like" sql query in this one.
+
+6.First letter and number:(like "First%")
+we use a selection of each first letter or first number of drop down box to get the value, once we get it we add "%" like string+"%" in the sql query.
+
+
+

@@ -1,0 +1,96 @@
+<style>
+    h1 {
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.19), 0 10px 6px rgba(0,0,0,0.23);
+        background-color: lightgray;
+        padding: 10px;
+        font-weight: 100px;
+        font-size: 16px;
+
+    }
+
+
+    fieldset {
+        border:1px solid #ccc;
+        width:50&#37;;
+        padding:1em;
+    }
+    label {
+        width:50%;
+        display:block;
+        text-align:right;
+    }
+    #al {
+        margin-left: 50%;
+    }
+
+    .frm{
+        width: auto;
+        height: auto;
+        background-color: #fde3b2;
+        overflow:auto;
+
+    }
+</style>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>DashBoard</title>
+</head>
+
+<body>
+<h1>Insert a star</h1>
+<br>
+<div class = "frm">
+
+    <form id="star_form" method="get" action="#">
+        <label><b>Starname(required)</b></label>
+        <input type="text" placeholder="Enter Starname" name="starname">
+        <br>
+        <label><b>Year of birth(optional)</b></label>
+        <input type="text" placeholder="Enter year of birth" name="date_of_birth">
+        <br>
+        <input type="submit" value="Insert" >
+    </form>
+
+    <div id="login_error_message" style="text-align: center; color: red; font-weight: bold;"></div>
+</div>
+
+<form id="movie_form" method="post" action="#">
+    <label><b>Moviename(required)</b></label>
+    <input type="text" placeholder="Enter Moviename" name="moviename">
+    <br>
+    <label><b>Year(required)</b></label>
+    <input type="text" placeholder="Enter year" name="year">
+    <br>
+    <label><b>Director(required)</b></label>
+    <input type="text" placeholder="Enter director" name="director">
+    <br>
+    <label><b>Genres(required only one)</b></label>
+    <input type="text" placeholder="Enter genres" name="genres">
+    <br>
+    <label><b>Starname(required only one)</b></label>
+    <input type="text" placeholder="Enter starname" name="starname">
+    <br>
+    <input type="submit" value="Insert" >
+</form>
+<div id="login_error_message_movie" style="text-align: center; color: red; font-weight: bold;"></div>
+<a href="Main.html" class="button">Go Back</a>
+<a href="data.html" class="button">Mega data</a>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- include our own JS file -->
+<script src="./dashboard.js"></script>
+
+</body>
+</html>
