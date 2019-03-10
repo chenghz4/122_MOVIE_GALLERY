@@ -10,4 +10,8 @@
               username="mytestuser"
               password="Zch700805!"
               url="jdbc:mysql://127.0.0.1:3306/moviedb"/>
+    <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+              maxTotal="100" maxIdle="30" maxWaitMillis="10000" username="mytestuser"
+              password="Zch700805!" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/moviedb?autoReconnect=true&amp;useSSL=false"/>
 </Context>

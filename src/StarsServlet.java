@@ -3,6 +3,8 @@ import com.google.gson.JsonObject;
 
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,8 +29,8 @@ public class StarsServlet extends HttpServlet {
     public int total;
     public int per;
     // Create a dataSource which registered in web.xml
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    //@Resource(name = "jdbc/moviedb")
+   // private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
@@ -138,8 +140,12 @@ public class StarsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            Context initCtx = new InitialContext();
+
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();
             String query =
                     "select distinct a.id, a.title, a.year, a.director, " +
                             "GROUP_CONCAT(distinct a.genre_name) as genre_name, a.rating,  " +

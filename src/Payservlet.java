@@ -1,6 +1,8 @@
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,10 +29,10 @@ import java.util.Calendar;
 @WebServlet(name = "Payservlet", urlPatterns = "/api/pay")
 public class Payservlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
+   // @Resource(name = "jdbc/moviedb")
 
 
-    private DataSource dataSource;
+    //private DataSource dataSource;
 
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -48,9 +50,12 @@ public class Payservlet extends HttpServlet {
 
 
         try {
+            Context initCtx = new InitialContext();
 
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();
 
             String query1="select count(id) " +
                     "from creditcards " +

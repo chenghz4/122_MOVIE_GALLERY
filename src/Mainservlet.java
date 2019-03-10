@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,15 +26,19 @@ import java.util.Map;
 @WebServlet(name = "Mainservlet", urlPatterns = "/api/Main")
     public class Mainservlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
+    //@Resource(name = "jdbc/moviedb")
 
 
-    private DataSource dataSource;
+   // private DataSource dataSource;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         PrintWriter out = response.getWriter();
         try {
-            Connection dbcon = dataSource.getConnection();
+            Context initCtx = new InitialContext();
+
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            Connection dbcon = ds.getConnection();
             String query = "SELECT GROUP_CONCAT(distinct name) as genre_name FROM genres ";
             PreparedStatement statement = dbcon.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
@@ -79,8 +85,12 @@ import java.util.Map;
             IOException {
             PrintWriter out = response.getWriter();
         try {
+            Context initCtx = new InitialContext();
+
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();
             JsonArray jsonArray = new JsonArray();
 
             String movie_name=request.getParameter("moviename");

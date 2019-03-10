@@ -1,6 +1,8 @@
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +31,8 @@ import java.sql.CallableStatement;
 @WebServlet(name = "DashBoardservlet", urlPatterns = "/api/dash")
 public class DashBoard extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+   // @Resource(name = "jdbc/moviedb")
+   // private DataSource dataSource;
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
         HttpSession session = request.getSession();
@@ -39,7 +41,13 @@ public class DashBoard extends HttpServlet {
         String date_of_birth = request.getParameter("date_of_birth");
         PrintWriter out = response.getWriter();
         try {
-            Connection dbcon = dataSource.getConnection();
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            Connection dbcon = ds.getConnection();
 
             if (!starname.equals("")) {
 
@@ -124,7 +132,13 @@ public class DashBoard extends HttpServlet {
 
 
         try {
-            Connection dbcon = dataSource.getConnection();
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            Connection dbcon = ds.getConnection();
             int check=0;
             if(!moviename.equals(null)&&!moviename.isEmpty()
                     &&!year.equals(null)&&!year.isEmpty()

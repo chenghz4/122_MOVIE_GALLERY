@@ -1,5 +1,7 @@
 import com.google.gson.JsonObject;
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +21,8 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 @WebServlet(name = "DashLoginServlet", urlPatterns = "/api/dash_login")
 public class Dashboard_login extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+   // @Resource(name = "jdbc/moviedb")
+    //private DataSource dataSource;
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
 
@@ -47,9 +49,15 @@ public class Dashboard_login extends HttpServlet {
 
 
         try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
             String email="";
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();
             String query1="select count(email) " +
                     "from employees " +
                     "where email=?  ";

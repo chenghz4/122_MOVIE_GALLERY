@@ -3,6 +3,8 @@ import com.google.gson.JsonObject;
 
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,8 +26,8 @@ public class MetaServlet extends HttpServlet {
 	
 	
 	private static final long serialVersionUID = 1L;
-	@Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+    //private DataSource dataSource;
 	
 	
 
@@ -35,7 +37,11 @@ public class MetaServlet extends HttpServlet {
 		
 		JsonArray jsonArray = new JsonArray();
 		try {
-			Connection dbcon = dataSource.getConnection();
+			Context initCtx = new InitialContext();
+
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+			Connection dbcon = ds.getConnection();
 			ArrayList<String> tables = new ArrayList<>();
 			tables.add("explain movies");
 			tables.add("explain stars");

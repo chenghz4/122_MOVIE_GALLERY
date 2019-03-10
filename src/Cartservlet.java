@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,8 +25,8 @@ import java.util.Date;
 @WebServlet(name = "Cartservlet", urlPatterns = "/api/cart")
 public class Cartservlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    //@Resource(name = "jdbc/moviedb")
+    //private DataSource dataSource;
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
@@ -32,8 +34,17 @@ public class Cartservlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         int flag=0;
         try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+
+
+
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();//datasource
             String query ="select id, title, year,director " +
                     "from movies " +
                     "where id=? ";
@@ -170,8 +181,17 @@ public class Cartservlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+            Context initCtx = new InitialContext();
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            if (envCtx == null)
+                out.println("envCtx is NULL");
+            // Look up our data source
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+
+
+
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();//datasource
             String query ="";
             PreparedStatement statement = dbcon.prepareStatement(query);
             ResultSet rs = statement.executeQuery();

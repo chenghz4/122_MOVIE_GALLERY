@@ -1,5 +1,7 @@
 import com.google.gson.JsonObject;
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +21,8 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 @WebServlet(name = "LoginServlet", urlPatterns = "/api/login")
 public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    @Resource(name = "jdbc/moviedb")
-    private DataSource dataSource;
+    //@Resource(name = "jdbc/moviedb")
+    //private DataSource dataSource;
     public String getServletInfo() {
         return "Servlet connects to MySQL database and displays result of a SELECT";
     }
@@ -53,9 +55,14 @@ public class LoginServlet extends HttpServlet {
 
 
         try {
+            Context initCtx = new InitialContext();
+
+            Context envCtx = (Context) initCtx.lookup("java:comp/env");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+
             String email="";
             // Get a connection from dataSource
-            Connection dbcon = dataSource.getConnection();
+            Connection dbcon = ds.getConnection();
             String query1="select count(email) " +
                     "from customers " +
                     "where email=?  ";

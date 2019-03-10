@@ -2,6 +2,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import javax.annotation.Resource;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +22,8 @@ public class SingleStarServlet extends HttpServlet {
 	private static final long serialVersionUID = 2L;
 
 	// Create a dataSource which registered in web.xml
-	@Resource(name = "jdbc/moviedb")
-	private DataSource dataSource;
+	//@Resource(name = "jdbc/moviedb")
+	//private DataSource dataSource;
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -39,8 +41,12 @@ public class SingleStarServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 
 		try {
+			Context initCtx = new InitialContext();
+
+			Context envCtx = (Context) initCtx.lookup("java:comp/env");
+			DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
 			// Get a connection from dataSource
-			Connection dbcon = dataSource.getConnection();
+			Connection dbcon = ds.getConnection();
 
 			// Construct a query with parameter represented by "?"
 			String query = "SELECT  s.name, s.birthYear, starId, GROUP_CONCAT(distinct movieId) as movieId, " +
