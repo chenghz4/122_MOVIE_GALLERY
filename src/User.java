@@ -1,6 +1,6 @@
 public class User {
 
-    public static String username;
+    private final String username;
 
     public User(String username) {
         this.username = username;

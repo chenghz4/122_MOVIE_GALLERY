@@ -87,10 +87,10 @@ public class Payservlet extends HttpServlet {
             statement.close();
 
 //
-            //User user=(User) session.getAttribute("user");
+            User user=(User) session.getAttribute("user");
             String usern="";
             //if(user!=null) {
-                usern = User.username;
+                usern = user.getUsername();
             //}
 
             String query2 ="select id " +
