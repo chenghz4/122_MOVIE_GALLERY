@@ -26,7 +26,7 @@ import java.util.Calendar;
  * This class is declared as LoginServlet in web annotation,
  * which is mapped to the URL pattern /api/login
  */
-@WebServlet(name = "Payservlet", urlPatterns = "/api/pay")
+@WebServlet(name = "Payservlet", urlPatterns = "/api/write/pay")
 public class Payservlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
    // @Resource(name = "jdbc/moviedb")
@@ -87,8 +87,12 @@ public class Payservlet extends HttpServlet {
             statement.close();
 
 //
-            User user=(User) session.getAttribute("user");
-            String usern=user.getUsername();
+            //User user=(User) session.getAttribute("user");
+            String usern="";
+            //if(user!=null) {
+                usern = User.username;
+            //}
+
             String query2 ="select id " +
                     "from customers " +
                     "where email=? ";

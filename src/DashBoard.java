@@ -28,7 +28,7 @@ import java.sql.CallableStatement;
 
 
 
-@WebServlet(name = "DashBoardservlet", urlPatterns = "/api/dash")
+@WebServlet(name = "DashBoardservlet", urlPatterns = "/api/write/dash")
 public class DashBoard extends HttpServlet {
     private static final long serialVersionUID = 1L;
    // @Resource(name = "jdbc/moviedb")

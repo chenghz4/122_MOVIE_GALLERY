@@ -37,7 +37,7 @@ function submitLoginForm(formSubmitEvent) {
     formSubmitEvent.preventDefault();
 
     $.get(
-        "api/dash",
+        "api/write/dash",
         // Serialize the login form to the data sent by POST request
         $("#star_form").serialize(),
         (resultDataString) => handleLoginResult(resultDataString)
@@ -71,7 +71,7 @@ function submitMovieForm(formSubmitEvent) {
     formSubmitEvent.preventDefault();
 
     $.post(
-        "api/dash",
+        "api/write/dash",
         // Serialize the login form to the data sent by POST request
         $("#movie_form").serialize(),
         (resultDataString) => handleMovieResult(resultDataString)

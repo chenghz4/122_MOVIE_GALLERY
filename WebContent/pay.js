@@ -35,7 +35,7 @@ function submitLoginForm(formSubmitEvent) {
     formSubmitEvent.preventDefault();
 
     $.get(
-        "api/pay",
+        "api/write/pay",
         // Serialize the login form to the data sent by POST request
         $("#creditcard_form").serialize(),
         (resultDataString) => handleLoginResult(resultDataString)
