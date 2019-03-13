@@ -34,6 +34,7 @@ public class StarsServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
+        long startTime2 = System.nanoTime();
         String number = request.getParameter("num");
         String page_p="";
         String page_n="";
@@ -63,6 +64,11 @@ public class StarsServlet extends HttpServlet {
         jsonObject.addProperty("sort_ta", sort_ta);
         out.write(jsonObject.toString());
         out.close();
+        long endTime2 = System.nanoTime();
+        long elapsedTime2 = endTime2 - startTime2;
+        System.out.print("doPost takes: "+elapsedTime2+" ");
+
+
    }
 
 
@@ -72,7 +78,7 @@ public class StarsServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        long startTime = System.nanoTime();
         //response.setContentType("application/json"); // Response mime type
         String id = request.getParameter("id");
         String x="";
@@ -140,12 +146,15 @@ public class StarsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
+
             Context initCtx = new InitialContext();
 
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
             DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
             // Get a connection from dataSource
             Connection dbcon = ds.getConnection();
+            long startTime1 = System.nanoTime();
+
             String query =
                     "select distinct a.id, a.title, a.year, a.director, " +
                             "GROUP_CONCAT(distinct a.genre_name) as genre_name, a.rating,  " +
@@ -208,7 +217,9 @@ public class StarsServlet extends HttpServlet {
             ResultSet rs = statement.executeQuery();
             //
 
-
+            long endTime1 = System.nanoTime();
+            long elapsedTime1 = endTime1 - startTime1;
+            System.out.print("JDBC takes: "+elapsedTime1+" ");
 
 
 
@@ -268,6 +279,12 @@ public class StarsServlet extends HttpServlet {
 
         }
         out.close();
+        long endTime = System.nanoTime();
+        long elapsedTime = endTime - startTime;
+        System.out.print("doGet takes: "+elapsedTime+" ");
+
 
     }
+
+
 }
