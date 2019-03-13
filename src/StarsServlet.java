@@ -156,7 +156,7 @@ public class StarsServlet extends HttpServlet {
                             " GROUP_CONCAT(distinct g.name) as genre_name, r.rating " +
                             "from movies as m, ratings as r, genres as g, genres_in_movies as y " +
                             "where m.id=y.movieId and y.genreId=g.id and r.movieId=m.id " +
-                            "and (MATCH (m.title) AGAINST (? IN BOOLEAN MODE)"+x+" or ed(m.title,?)<=2) " +
+                            "and (MATCH (m.title) AGAINST (? IN BOOLEAN MODE)"+x+" or ed(m.title,?)<=2 ) " +
                             "and m.year like ? " +
                             "and m.director like ? " +
                             "and g.name like ? and m.title like ?  " +

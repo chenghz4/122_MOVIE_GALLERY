@@ -53,7 +53,7 @@ public class Payservlet extends HttpServlet {
             Context initCtx = new InitialContext();
 
             Context envCtx = (Context) initCtx.lookup("java:comp/env");
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/WriteDB");
             // Get a connection from dataSource
             Connection dbcon = ds.getConnection();
 
@@ -88,9 +88,9 @@ public class Payservlet extends HttpServlet {
 
 //
             User user=(User) session.getAttribute("user");
-            String usern="";
+
             //if(user!=null) {
-                usern = user.getUsername();
+            String  usern = user.getUsername();
             //}
 
             String query2 ="select id " +

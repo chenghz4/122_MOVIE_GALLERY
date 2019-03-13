@@ -46,7 +46,7 @@ public class DashBoard extends HttpServlet {
             if (envCtx == null)
                 out.println("envCtx is NULL");
             // Look up our data source
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/WriteDB");
             Connection dbcon = ds.getConnection();
 
             if (!starname.equals("")) {
@@ -137,7 +137,7 @@ public class DashBoard extends HttpServlet {
             if (envCtx == null)
                 out.println("envCtx is NULL");
             // Look up our data source
-            DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+            DataSource ds = (DataSource) envCtx.lookup("jdbc/WriteDB");
             Connection dbcon = ds.getConnection();
             int check=0;
             if(!moviename.equals(null)&&!moviename.isEmpty()
