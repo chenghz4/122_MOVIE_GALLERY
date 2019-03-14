@@ -285,7 +285,7 @@ public class StarsServlet extends HttpServlet {
         try {
 
             String contextPath = getServletContext().getRealPath("/");
-            String xmlFilePath = contextPath + "\\test.log";
+            String xmlFilePath = contextPath + "test.log";
             System.out.println(xmlFilePath);
             File myfile = new File(xmlFilePath);
             myfile.createNewFile();
