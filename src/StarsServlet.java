@@ -293,8 +293,8 @@ public class StarsServlet extends HttpServlet {
 
             FileWriter writer = new FileWriter(myfile,true);
             BufferedWriter out1 = new BufferedWriter(writer);
-            out1.write("doGet: "+elapsedTime+" ");
-            out1.write("JDBC: "+elapsedTime1+" " + "\r\n");
+            out1.write("doget:"+elapsedTime+" ");
+            out1.write("JDBC:"+elapsedTime1 + "\r\n");
             out1.flush();
             out1.close();
 
