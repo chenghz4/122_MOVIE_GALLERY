@@ -1,7 +1,7 @@
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-
+import java.io.*;
 import javax.annotation.Resource;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -21,6 +21,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 
+
 // Declaring a WebServlet called StarsServlet, which maps to url "/api/stars"
 @WebServlet(name = "StarsServlet", urlPatterns = "/api/stars")
 public class StarsServlet extends HttpServlet {
@@ -30,7 +31,7 @@ public class StarsServlet extends HttpServlet {
     public int per;
     // Create a dataSource which registered in web.xml
     //@Resource(name = "jdbc/moviedb")
-   // private DataSource dataSource;
+    // private DataSource dataSource;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
             IOException {
@@ -69,7 +70,7 @@ public class StarsServlet extends HttpServlet {
         System.out.print("doPost: "+elapsedTime2+" ");
 
 
-   }
+    }
 
 
 
@@ -83,16 +84,14 @@ public class StarsServlet extends HttpServlet {
         String id = request.getParameter("id");
         String x="";
         String id_fix="";
-
         ArrayList<String> n=new ArrayList<String>();
-
+        long elapsedTime1=0;
 
         if(id!=null&&!id.isEmpty()&&!id.equals("")) {
             String m[] = id.split("\\s+");
             for (int i = 0; i < m.length; i++) id_fix = id_fix + "+" + m[i] + "* ";
             //m[i]
         }
-
         else {
             id_fix="";
             x="=0";
@@ -176,7 +175,7 @@ public class StarsServlet extends HttpServlet {
                             "where a.id=x.movieId and x.starId=s.id and s.name like ?  " +
                             "group by a.id  " +
                             "order by  " +
-                             sort  +
+                            sort  +
                             " limit ?, ? " ;
 
 
@@ -218,7 +217,7 @@ public class StarsServlet extends HttpServlet {
             //
 
             long endTime1 = System.nanoTime();
-            long elapsedTime1 = endTime1 - startTime1;
+            elapsedTime1 = endTime1 - startTime1;
             System.out.print("JDBC: "+elapsedTime1+" ");
 
 
@@ -241,24 +240,24 @@ public class StarsServlet extends HttpServlet {
                 // Create a JsonObject based on the data we retrieve from rs
 
 
-                    JsonObject jsonObject = new JsonObject();
+                JsonObject jsonObject = new JsonObject();
 
-                    jsonObject.addProperty("movie_id", movie_id);
-                    jsonObject.addProperty("movie_title", movie_title);
-                    jsonObject.addProperty("movie_year", movie_year);
-                    jsonObject.addProperty("movie_director", movie_director);
-                    jsonObject.addProperty("list_g", genre_name);
-                    jsonObject.addProperty("list_s", star_name);
-                    jsonObject.addProperty("s.id", star_id);
-                    jsonObject.addProperty("rating", rate);
+                jsonObject.addProperty("movie_id", movie_id);
+                jsonObject.addProperty("movie_title", movie_title);
+                jsonObject.addProperty("movie_year", movie_year);
+                jsonObject.addProperty("movie_director", movie_director);
+                jsonObject.addProperty("list_g", genre_name);
+                jsonObject.addProperty("list_s", star_name);
+                jsonObject.addProperty("s.id", star_id);
+                jsonObject.addProperty("rating", rate);
 
-                    jsonArray.add(jsonObject);
+                jsonArray.add(jsonObject);
 
-                }
+            }
 
 
 
-            
+
             // write JSON string to output
             out.write(jsonArray.toString());
             // set response status to 200 (OK)
@@ -268,14 +267,14 @@ public class StarsServlet extends HttpServlet {
             statement.close();
             dbcon.close();
         } catch (Exception e) {
-        	
-			// write error message JSON object to output
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("errorMessage", e.getMessage());
-			out.write(jsonObject.toString());
 
-			// set reponse status to 500 (Internal Server Error)
-			response.setStatus(500);
+            // write error message JSON object to output
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("errorMessage", e.getMessage());
+            out.write(jsonObject.toString());
+
+            // set reponse status to 500 (Internal Server Error)
+            response.setStatus(500);
 
         }
         out.close();
@@ -283,6 +282,25 @@ public class StarsServlet extends HttpServlet {
         long elapsedTime = endTime - startTime;
         System.out.print("doGet: "+elapsedTime+" ");
 
+        try {
+
+            String contextPath = getServletContext().getRealPath("/");
+            String xmlFilePath = contextPath + "\\test.log";
+            System.out.println(xmlFilePath);
+            File myfile = new File(xmlFilePath);
+            myfile.createNewFile();
+
+
+            FileWriter writer = new FileWriter(myfile,true);
+            BufferedWriter out1 = new BufferedWriter(writer);
+            out1.write("doGet: "+elapsedTime+" ");
+            out1.write("JDBC: "+elapsedTime1+" " + "\r\n");
+            out1.flush();
+            out1.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
