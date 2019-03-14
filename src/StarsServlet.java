@@ -66,7 +66,7 @@ public class StarsServlet extends HttpServlet {
         out.close();
         long endTime2 = System.nanoTime();
         long elapsedTime2 = endTime2 - startTime2;
-        System.out.print("doPost takes: "+elapsedTime2+" ");
+        System.out.print("doPost: "+elapsedTime2+" ");
 
 
    }
@@ -219,7 +219,7 @@ public class StarsServlet extends HttpServlet {
 
             long endTime1 = System.nanoTime();
             long elapsedTime1 = endTime1 - startTime1;
-            System.out.print("JDBC takes: "+elapsedTime1+" ");
+            System.out.print("JDBC: "+elapsedTime1+" ");
 
 
 
@@ -281,7 +281,7 @@ public class StarsServlet extends HttpServlet {
         out.close();
         long endTime = System.nanoTime();
         long elapsedTime = endTime - startTime;
-        System.out.print("doGet takes: "+elapsedTime+" ");
+        System.out.print("doGet: "+elapsedTime+" ");
 
 
     }
