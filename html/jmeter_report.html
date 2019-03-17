@@ -28,7 +28,7 @@ td {
     <td>175.00ms</td>
     <td>35.90ms</td>
     <td>35.61ms</td>
-    <td>--</td>
+    <td>This is regular one-user accessing our website, sending the query to the single instance</td>
   </tr>
   <tr>
     <td>Case 2: HTTP/10 threads</td>
@@ -36,7 +36,9 @@ td {
     <td>403.00ms</td>
     <td>226.56ms</td>
     <td>225.00ms</td>
-    <td>--</td>
+    <td>This is 10-users accessing our website at the same time, sending the query to single instance. 
+      You can see, as the loading increasing, Average query time, JDBC time and Servlet time increase because too many traffic on the server.
+    </td>
   </tr>
   <tr>
     <td>Case 3: HTTPS/10 threads</td>
@@ -44,7 +46,10 @@ td {
     <td>689.00ms</td>
     <td>167.09ms</td>
     <td>165.07ms</td>
-    <td>--</td>
+    <td>This is 10-users accessing our website at the same time, sending the query to single instance, but using a https protocol.
+    You can see, compared to case 2, the average query time increase because it takes more time to encrypt all the information.
+    However, the TJ and TS are faster than http request. Then I google this result, here is what I got from google, which might can explain this.
+    "Therefore, HTTPS is almost always going to be faster than HTTP simply due to the different protocol it generally uses. However, if HTTP over HTTP/1.1 is compared with HTTPS over HTTP/1.1, then HTTP is slightly faster, on average, than HTTPS"  </td>
   </tr>
   <tr>
     <td>Case 4: HTTP/10 threads/No prepared statements</td>
@@ -52,7 +57,10 @@ td {
     <td>409.00ms</td>
     <td>229.59ms</td>
     <td>228.11ms</td>
-    <td>--</td>
+    <td>As expected, prepared statement do increase the performance of the website. But from the results we can not see too much improvement, 
+    TJ, TS and average query time increase a little bit compared to case 2.
+    But in this case, we only send 10 users to access our website. So the improvement could be more if the number of users increase.
+    </td>
   </tr>
   <tr>
     <td>Case 5: HTTP/10 threads/No connection pooling</td>
@@ -60,7 +68,10 @@ td {
     <td>409.00ms</td>
     <td>228.93ms</td>
     <td>227.59ms</td>
-    <td>--</td>
+    <td>As expected, enable connection pooling do increase the performance of the website. From the results not too much improvement, 
+        TJ, TS and average query time increase a little bit compared to case 2.
+        But in this case, we only send 10 users to access our website. So the improvement could be more if the number of users increase.
+      </td>
   </tr>
 
 </table> 
@@ -81,7 +92,11 @@ td {
     <td>169.00ms</td>
     <td>36.83ms</td>
     <td>36.35ms</td>
-    <td>--</td>
+    <td>This is regular one-user accessing our website, sending the query to scaled version by using a load balancer.
+      Compared to single instance(one user), as expected, TJ,TS doesnt change because load balancer doesnt change anything about the 
+      connection to the database. Also, average query time become faster, which makes sense. I think it is because the load balcnce 
+      balance the requests and send them to two instance equally. That reduces the traffic in the server side and improve the performance.  
+    </td>
   </tr>
   <tr>
     <td>Case 2: HTTP/10 threads</td>
@@ -89,7 +104,9 @@ td {
     <td>217.00ms</td>
     <td>83.93ms</td>
     <td>83.23ms</td>
-    <td>--</td>
+    <td>This is regular 10-user at the same time accessing our website, sending the query to scaled version by using a load balancer.
+        Compared to scaled version case 1, as expected, as the loading increasing, Average query time, JDBC time and Servlet time 
+        increase because too many traffic on the server. </td>
   </tr>
   <tr>
     <td>Case 3: HTTP/10 threads/No prepared statements</td>
@@ -97,7 +114,9 @@ td {
     <td>217.00ms</td>
     <td>83.74ms</td>
     <td>82.87ms</td>
-    <td></td>
+    <td>Not As expected, prepared statement does not really change anything. TJ, TS and average query time stay the same.
+        But in this case, we only send 10 users to access our website. So the improvement maybe more obvious if the number of users increase.
+      </td>
   </tr>
   <tr>
     <td>Case 4: HTTP/10 threads/No connection pooling</td>
@@ -105,7 +124,12 @@ td {
     <td>210.00ms</td>
     <td>80.13ms</td>
     <td>79.65ms</td>
-    <td>--</td>
+    <td>Not As expected, connection pooling even make the performance worse in the scaled version. TJ, TS and average query time become slower 
+      compared to case 2 scaled version. I have a wild guess of this result. I think maybe because in the scaled version, I create two connection
+    pooling, one for read request and the other for write request. So every time sending query to server, server has to know which connection 
+    pooling goes. That going to take some extra time and that explain why for single instance version the connection pooling does improve
+    the website. However, when it comes to scaled version, it even make the website slower because it takes extra time to find which pooling is the 
+    right one. </td>
   </tr>
 
 </table> 
