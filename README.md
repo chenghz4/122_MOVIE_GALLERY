@@ -1,7 +1,5 @@
-## CS 122B Project 5 
+#Movie Gallery
 
-Before testing the website, you need to delete the "Loginfilter.java" in the scr folder, which make sure the jmeter requests are valid.
-And also, I set the page size to 50 and dont let the website cache any data.
-
-All project detail are in project5_report.pdf, it is located at the root dictionary.
-
+A website built for movie search, using microservice front and backend.
+Running based on AWS, Tomcat server, separate front and back end, using load balancer
+using https and preparestatement to prevent SQL injection 
